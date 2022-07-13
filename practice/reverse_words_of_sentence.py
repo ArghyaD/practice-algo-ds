@@ -1,8 +1,10 @@
+from typing import List
 
-def reverse_words_of_sentence(S: str):
-    buffer = S.split(".")
-    start = 0
-    end = len(buffer) - 1
+
+def reverse_words_of_sentence(string_to_convert: str) -> str:
+    buffer: List[str] = string_to_convert.split(".")
+    start: int = 0
+    end: int = len(buffer) - 1
     while start < end:
         buffer[start], buffer[end] = buffer[end], buffer[start]
         start += 1
