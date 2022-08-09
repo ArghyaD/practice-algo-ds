@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 
 from binary_tree.get_maximum_width_and_height import TreeNode
 
@@ -95,6 +95,35 @@ class DfsIterativeTraversalsUsingMorrisAlgorithm:
                     right_most_node_in_left_subtree.right = None
                     current = current.right
 
+    @staticmethod
+    def postorder_traversal(root: Optional[TreeNode]):
+        result: List[int] = []
+
+        current: Optional[TreeNode] = root
+
+        while current:
+
+            if not current.right:
+                result.append(current.val)
+                current = current.left
+            else:
+                left_most_node_in_right_subtree: TreeNode = current.right
+
+                while left_most_node_in_right_subtree.left and left_most_node_in_right_subtree.left is not current:
+                    left_most_node_in_right_subtree = left_most_node_in_right_subtree.left
+
+                if not left_most_node_in_right_subtree.left:
+                    result.append(current.val)
+                    left_most_node_in_right_subtree.left = current
+                    current = current.right
+
+                else:
+                    left_most_node_in_right_subtree.left = None
+                    current = current.left
+
+        while result:
+            print(result.pop(), end=" ")
+
 
 if __name__ == "__main__":
 
@@ -111,3 +140,6 @@ if __name__ == "__main__":
 
     print("\nPreorder Traversal: ", end="")
     DfsIterativeTraversalsUsingMorrisAlgorithm.preorder_traversal(bst_root)
+
+    print("\nPost Order Traversal: ", end="")
+    DfsIterativeTraversalsUsingMorrisAlgorithm.postorder_traversal(bst_root)

@@ -18,8 +18,9 @@ class BinaryTreeToDLLConversionApproach1:
     """
      Performs In place conversion from Binary Tree to DLL
      Time Complexity: O(n)
-     Space Complexity: O(1)
+     Space Complexity: O(n)
     """
+
     def binary_tree_to_dll_util(self, root: Optional[Node]) -> Optional[Node]:
         if not root:
             return root
@@ -48,19 +49,20 @@ class BinaryTreeToDLLConversionApproach1:
         if not root:
             return root
 
-        root = self.binary_tree_to_dll_util(root)
+        current = deepcopy(root)
+        current = self.binary_tree_to_dll_util(current)
 
-        while root.left:
-            root = root.left
+        while current.left:
+            current = current.left
 
-        return root
+        return current
 
 
 class BinaryTreeToDLLConversionApproach2:
     @staticmethod
     def binary_tree_to_dll(root: Optional[Node]):
         stack: List[Optional[Node]] = []
-        current: Optional[Node] = deepcopy(root)
+        current: Optional[Node] = deepcopy(root)  # deep copy is not required here
         head: Optional[Node] = None
         tail: Optional[Node] = None
 
@@ -83,12 +85,53 @@ class BinaryTreeToDLLConversionApproach2:
         return head
 
 
+class BinaryTreeToDLLConversionApproach3:
+    """
+     Performs In place conversion from Binary Tree to DLL
+     Time Complexity: O(n)
+     Space Complexity: O(1)
+    """
+    @staticmethod
+    def binary_tree_to_dll(root: Optional[Node]):
+        current: Optional[Node] = deepcopy(root)
+        head: Optional[Node] = None
+        tail: Optional[Node] = None
+
+        while current:
+            if not current.left:
+                if not head:
+                    head = current
+                else:
+                    tail.right = current
+                tail = current
+                current = current.right
+            else:
+                inorder_predecessor: Node = current.left
+                while inorder_predecessor.right and inorder_predecessor.right is not current:
+                    inorder_predecessor = inorder_predecessor.right
+
+                if not inorder_predecessor.right:
+                    inorder_predecessor.right = current
+                    current = current.left
+                else:
+                    tail.right = current
+                    tail = current
+                    current = current.right
+        print(head.data)
+        return head
+
+
 def print_dll(head: Optional[Node]):
-    while head is not None:
-        print(head.data, end="")
-        if head.right:
-            print(end=" <-> ")
-        head = head.right
+    current = head
+    print("\nPrinting from head: ")
+    while current:
+        left = current.left.data if current.left else None
+        right = current.right.data if current.right else None
+        print(f"({left}) {current.data} ({right})", end="")
+
+        if current.right:
+            print(end=" <=> ")
+        current = current.right
 
 
 if __name__ == '__main__':
@@ -103,9 +146,16 @@ if __name__ == '__main__':
     head = obj1.binary_tree_to_dll(root)
     print_dll(head)
 
-    print()
+    print("\n*********************************************************************************")
 
     obj = BinaryTreeToDLLConversionApproach1()
     head = obj.binary_tree_to_dll(root)
     print_dll(head)
 
+    print("\n*********************************************************************************")
+
+    obj = BinaryTreeToDLLConversionApproach3()
+    head = obj.binary_tree_to_dll(root)
+    print_dll(head)
+
+    print("\n*********************************************************************************")
