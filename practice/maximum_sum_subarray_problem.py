@@ -11,7 +11,6 @@ class MaximumSumSubarray:
                 max_global = max_current
         return max_global
 
-
 if __name__ == '__main__':
     obj = MaximumSumSubarray()
     array: List[int] = [1, 2, 3, -2, 5]

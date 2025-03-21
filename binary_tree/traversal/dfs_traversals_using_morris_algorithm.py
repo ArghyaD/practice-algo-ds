@@ -13,7 +13,7 @@ class DfsIterativeTraversalsUsingMorrisAlgorithm:
               a) Print current’s data
               b) Go to the right, i.e., current = current->right
            Else
-              a) Find rightmost node in current left subtree OR
+              a) Find rightmost node in current left subtree (AKA Left predecessor) OR
                       node whose right child == current.
                  If we found right child == current
                      a) Update the right child as NULL of that node whose right child is current

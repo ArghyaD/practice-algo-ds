@@ -1,5 +1,4 @@
 from typing import Optional, List
-
 from binary_tree.get_maximum_width_and_height import TreeNode
 
 
@@ -37,7 +36,7 @@ def left_view_traversal(root: Optional[TreeNode]):
                 queue.append(temp.right)
 
 
-def left_view_recursive_traversal_util(root: Optional[TreeNode], level: int, max_level) -> None:
+def left_view_recursive_traversal_util(root: Optional[TreeNode], level: int, max_level: List[int]) -> None:
     if not root:
         return None
     print(f"[DEBUG] Node: {root.val}, level: {level}, max_level:{max_level[0]}")
@@ -62,5 +61,5 @@ if __name__ == '__main__':
     root.right.right = TreeNode(7)
 
     # left_view_iterative_traversal(root)
-    left_view_recursive_traversal(root)
-
+    # left_view_recursive_traversal(root)
+    right_view_traversal(root)

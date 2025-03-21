@@ -1,4 +1,5 @@
 from typing import Optional, List
+from collections import deque
 
 from binary_tree.get_maximum_width_and_height import TreeNode
 
@@ -70,6 +71,22 @@ class BfsIterativeTraversals:
     #
     #     matrix_buffer: List[List[Optional[BinaryTreeNode]]] = [None for]
 
+
+    @staticmethod
+    def level_order_traversal(root: Optional[TreeNode]):
+        buffer = deque()
+        buffer.append(root)
+
+        while buffer:
+            current: TreeNode = buffer.popleft()
+            print(f"Visiting Node {current.val}")
+            if current.left:
+                buffer.append(current.left)
+            if current.right:
+                buffer.append(current.right)
+
+
+
 if __name__ == "__main__":
     root: TreeNode = TreeNode(1)
     root.left = TreeNode(2)
@@ -77,7 +94,8 @@ if __name__ == "__main__":
     root.right.right = TreeNode(4)
     root.right.left = TreeNode(5)
     root.left.right = TreeNode(6)
-    root.left.left = TreeNode(7)
+    root.left.right.right = TreeNode(7)
 
     print("Zig Zag Level Order Traversal: ")
-    BfsIterativeTraversals.zig_zag_order_using_one_doubly_ended_queue(root)
+    # BfsIterativeTraversals.zig_zag_order_using_one_doubly_ended_queue(root)
+    BfsIterativeTraversals.level_order_traversal(root)

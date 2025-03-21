@@ -57,3 +57,6 @@ if __name__ == '__main__':
     connect_nodes_at_same_level(root)
 
     level_order_traversal(root)
+
+    import time
+    time.perf_counter()

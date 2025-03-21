@@ -35,14 +35,12 @@ class DfsIterativeTraversalsUsingStack:
 
         while current or stack:
             if current:
-                stack.append(current)
-
                 print(current.val, end=" ")
 
+                stack.append(current)
                 current = current.left
             else:
                 current = stack.pop()
-
                 current = current.right
 
     @staticmethod

@@ -2,19 +2,24 @@ from typing import List
 
 
 def min_heapify(array: List[int], heap_size: int, root_index: int):
-    smallest: int = root_index
-    left_child: int = 2 * root_index + 1
-    right_child: int = 2 * root_index + 2
+    current = root_index
 
-    if (left_child < heap_size) and (array[left_child] < array[smallest]):
-        smallest = left_child
+    while True:
+        largest = current
+        left = 2 * largest + 1
+        right = 2 * largest + 2
 
-    if (right_child < heap_size) and (array[right_child] < array[smallest]):
-        smallest = right_child
+        if (left < heap_size) and array[left] < array[largest]:
+            largest = left
 
-    if smallest != root_index:
-        array[smallest], array[root_index] = array[root_index], array[smallest]
-        min_heapify(array, heap_size, smallest)
+        if (right < heap_size) and array[right] < array[largest]:
+            largest = right
+
+        if current == largest:
+            break
+
+        array[current], array[largest] = array[largest], array[current]
+        current = largest
 
 
 def kth_smallest_element(array: List[int], k):
@@ -30,7 +35,20 @@ def kth_smallest_element(array: List[int], k):
     return array[size - k]
 
 
+def heap_sort(arr):
+    n = len(arr)
+
+    for i in range(n//2 - 1, -1, -1):
+        min_heapify(arr, heap_size=n, root_index=i)
+
+    for i in range(n-1, 0, -1):
+        arr[0], arr[i] = arr[0], arr[i]
+        min_heapify(arr, heap_size=i, root_index=0)
+
+
 if __name__ == "__main__":
     array = [12, 6, 4, 15, 19, 21, 9, 1]
-    k = 2
-    print(f"{k}th smallest element in {array} is: ", kth_smallest_element(array, k))
+    heap_sort(arr=array)
+    print(array)
+    # k = 2
+    # print(f"{k}th smallest element in {array} is: ", kth_smallest_element(array, k))
